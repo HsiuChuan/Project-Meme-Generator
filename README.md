@@ -31,6 +31,6 @@ python app.py
 
 ### Command Line Interface
 This project contains a simple cli app starter code in meme.py. The script takes three optional CLI arguments:
-- `body`:  a string quote body
-- `author`:  a string quote author
-- `path`: an image path
+- `--body`:  a string quote body
+- `--author`:  a string quote author
+- `--path`: an image path

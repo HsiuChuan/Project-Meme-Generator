@@ -23,14 +23,13 @@ pip install -r requirements.txt
 ```
 
 ## Uses
-#### Flask Web Application
+### Flask Web Application
 This application is built with Flask. Start the application by running the following command:
-
 ```bash=
 python app.py
 ```
 
-#### Command Line Interface
+### Command Line Interface
 This project contains a simple cli app starter code in meme.py. The script takes three optional CLI arguments:
 - `body`:  a string quote body
 - `author`:  a string quote author

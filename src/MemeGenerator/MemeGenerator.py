@@ -1,11 +1,17 @@
+"""Meme Engine."""
+
 from PIL import Image, ImageDraw
 
+
 class MemeGenerator():
+    """Class of meme generator."""
+    
     def __init__(self, output_dir):
+        """Input of paratmeters."""
         self.output_dir = output_dir
 
     def make_meme(self, img_path, text, author, width=500):
-        """Create a Postcard With a Text Greeting
+        """Create a Postcard With a Text Greeting.
 
         Arguments:
             in_path {str} -- the file location for the input image.
@@ -27,9 +33,8 @@ class MemeGenerator():
             message = text + ' - ' + author
             draw.text((10, 400), message, fill='white')
 
-        filename =  img_path.split('/')[-1]
-        filename =  filename.split('.')[-2]+ '_resize.' + filename.split('.')[-1]
+        filename = img_path.split('/')[-1]
+        filename = filename.split('.')[-2] + '_resize.' + filename.split('.')[-1]
         output_path_with_filename = self.output_dir + filename
-        
         img.save(output_path_with_filename)
         return output_path_with_filename

@@ -1,3 +1,5 @@
+"""Run the application by flask."""
+
 import random
 import os
 import requests
@@ -8,18 +10,13 @@ from MemeGenerator import MemeGenerator
 
 
 app = Flask(__name__)
-
 meme = MemeGenerator('./static')
 
 
 def setup():
-    """ Load all resources """
-
+    """Load all resources."""
     # quotes from different files
-    quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
-                './_data/DogQuotes/DogQuotesDOCX.docx',
-                './_data/DogQuotes/DogQuotesPDF.pdf',
-                './_data/DogQuotes/DogQuotesCSV.csv']
+    quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt', './_data/DogQuotes/DogQuotesDOCX.docx', './_data/DogQuotes/DogQuotesPDF.pdf', './_data/DogQuotes/DogQuotesCSV.csv']
     quotes = []
     for f in quote_files:
         quotes.extend(Ingestor.parse(f))
@@ -32,13 +29,13 @@ def setup():
 
     return quotes, imgs
 
+
 quotes, imgs = setup()
 
 
 @app.route('/')
 def meme_rand():
-    """ Generate a random meme """
-
+    """Generate a random meme."""
     img = random.choice(imgs)
     quote = random.choice(quotes)
     if quote and img:
@@ -48,16 +45,16 @@ def meme_rand():
         path = meme.make_meme('./_data/photos/dog/xander_1.jpg', "Default quote.", "Default author.")
         return render_template('meme.html', path=path)
 
+
 @app.route('/create', methods=['GET'])
 def meme_form():
-    """ User input for meme information """
+    """User input for meme information."""
     return render_template('meme_form.html')
 
 
 @app.route('/create', methods=['POST'])
 def meme_post():
-    """ Create a user defined meme """
-
+    """Create a user defined meme."""
     image_url = request.form['image_url']
     body = request.form['body']
     author = request.form['author']
@@ -68,13 +65,13 @@ def meme_post():
         img_tmp_path = f'./{random.randint(0, 100)}.jpg'
         with open(img_tmp_path) as f:
             f.write(img.content)
-    except:
+    except FileNotFoundError:
         print("Somehting wrong with image")
         path = meme.make_meme('./_data/photos/dog/xander_1.jpg', "Default quote.", "Default author.")
     else:
         path = meme.make_meme(img_tmp_path, body, author)
         os.remove(img_tmp_path)
-    finally: 
+    finally:
         return render_template('meme_form.html', path=path)
 
 
